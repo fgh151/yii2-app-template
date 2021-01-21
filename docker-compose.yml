@@ -6,7 +6,6 @@ networks:
       name: router
 
 volumes:
-  fs_storage:
   fs_database:
 
 services:
@@ -32,7 +31,6 @@ services:
       DATABASE_HOST: database
     links:
       - database
-      - storage
     volumes:
       - ./:/var/www/html/:delegated
 

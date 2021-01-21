@@ -16,7 +16,7 @@ $basePath = dirname(__DIR__);
 
 $config = [
     'id' => 'project',
-    'layout' => 'layout',
+    'layout' => 'layouts/main',
     'basePath' => "{$basePath}/src",
     'runtimePath' => "{$basePath}/runtime",
     'params' => require "{$basePath}/config/params.php",
@@ -46,6 +46,7 @@ $config = [
         ],
         'user' => [
             'class' => \yii\web\User::class,
+            'identityClass' => \src\models\User::class,
         ],
         'urlManager' => [
             'enablePrettyUrl' => true,

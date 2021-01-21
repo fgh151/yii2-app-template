@@ -3,7 +3,7 @@
 $applicationPath = dirname(__DIR__);
 return [
     'basePath' => $applicationPath,
-    'layoutPath' => "{$applicationPath}/views",
+    'layoutPath' => "{$applicationPath}/views/layouts",
     'id' => 'app-admin',
     'bootstrap' => ['log'],
     'controllerNamespace' => "src\\applications\\admin\\controllers",

@@ -1,5 +1,4 @@
 <?php
-
 $applicationPath = dirname(__DIR__);
 return [
     'basePath' => $applicationPath,
