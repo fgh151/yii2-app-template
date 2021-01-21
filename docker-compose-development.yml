@@ -1,0 +1,30 @@
+# Конфигурация Docker Compose, предоставляющая более комфортные средства для
+# работы разработчиков. Тут можно, например, указать привязку к портам для
+# прямого доступа к функционалу запущенных сервисов.
+
+version: '3'
+
+networks:
+  router:
+    external:
+      name: router
+
+volumes:
+  fs_database:
+
+services:
+  database:
+    ports:
+      - 6422:${DATABASE_PORT}
+
+  mailhog:
+    image: mailhog/mailhog
+    labels:
+      traefik.enable: '1'
+      traefik.backend: mailhog
+      traefik.frontend.rule: Host:mail.site.box
+      traefik.docker.network: router
+      traefik.port: '8025'
+    networks:
+      - router
+      - default

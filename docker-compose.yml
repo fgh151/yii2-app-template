@@ -1,38 +1,46 @@
-version: '3.2'
+version: '3'
+
+networks:
+  router:
+    external:
+      name: router
+
+volumes:
+  fs_storage:
+  fs_database:
 
 services:
-
-  frontend:
-    build: frontend
-    ports:
-      - 20080:80
+  nginx:
+    image: 'nginx'
+    labels:
+      traefik.enable: '1'
+      traefik.frontend.rule: Host:site.box,api.site.box,admin.site.box
+      traefik.docker.network: router
+    networks:
+      - router
+      - default
+    links:
+      - app
     volumes:
-      # Re-use local composer cache via host-volume
-      - ~/.composer-docker/cache:/root/.composer/cache:delegated
-      # Mount source-code for development
-      - ./:/app
+      - .:/var/www/html:delegated
+      - ./config/docker/nginx.conf:/etc/nginx/nginx.conf
 
-  backend:
-    build: backend
-    ports:
-      - 21080:80
-    volumes:
-      # Re-use local composer cache via host-volume
-      - ~/.composer-docker/cache:/root/.composer/cache:delegated
-      # Mount source-code for development
-      - ./:/app
-
-  mysql:
-    image: mysql:5.7
+  app:
+    image: 'ruvents/php:7.4'
+    env_file: .env
     environment:
-      - MYSQL_ROOT_PASSWORD=verysecret
-      - MYSQL_DATABASE=yii2advanced
-      - MYSQL_USER=yii2advanced
-      - MYSQL_PASSWORD=secret
+      DATABASE_HOST: database
+    links:
+      - database
+      - storage
+    volumes:
+      - ./:/var/www/html/:delegated
 
-  #pgsql:
-  #  image: postgres:9.5
-  #  environment:
-  #    - POSTGRES_DB=yii2advanced
-  #    - POSTGRES_USER=yii2advanced
-  #    - POSTGRES_PASSWORD=secret
+  database:
+    image: 'postgres:12.2-alpine'
+    environment:
+      POSTGRES_PASSWORD: ${DATABASE_PASS}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_DB: ${DATABASE_NAME}
+    volumes:
+      - 'fs_database:/var/lib/postgresql/data'
