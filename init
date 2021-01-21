@@ -109,6 +109,9 @@ foreach ($callbacks as $callback) {
     }
 }
 
+$all = false;
+copyFile(__DIR__, '.env.example', '.env', $all, []);
+
 echo "\n  ... initialization completed.\n\n";
 
 function getFileList($root, $basePath = '')
