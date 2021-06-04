@@ -32,10 +32,7 @@
         "symfony/browser-kit": ">=2.7 <=4.2.4"
     },
     "config": {
-        "process-timeout": 1800,
-        "fxp-asset": {
-            "enabled": false
-        }
+        "process-timeout": 1800
     },
     "repositories": [
         {
