@@ -38,4 +38,3 @@ phpunit.phar
 /public/index.php
 /public/index-test.php
 
-.env
