@@ -9,9 +9,6 @@
 
 declare(strict_types = 1);
 
-define('CACHE_LAST_MATERIALS', 'CacheLastMaterials');
-define('CACHE_CLOSEST_EVENTS', 'CacheClosestEvents');
-
 $basePath = dirname(__DIR__);
 
 $config = [
