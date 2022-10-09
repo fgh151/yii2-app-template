@@ -10,10 +10,11 @@ volumes:
 
 services:
   nginx:
+    env_file: .env
     image: 'nginx'
     labels:
       traefik.enable: '1'
-      traefik.frontend.rule: Host:site.box,api.site.box,admin.site.box
+      traefik.frontend.rule: Host:${HOSTS}
       traefik.docker.network: router
     networks:
       - router
@@ -25,7 +26,7 @@ services:
       - ./config/docker/nginx.conf:/etc/nginx/nginx.conf
 
   app:
-    image: 'ruvents/php:7.4'
+    image: 'fgh151/php:8.1-fpm'
     env_file: .env
     environment:
       DATABASE_HOST: database
